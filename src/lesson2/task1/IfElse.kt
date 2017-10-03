@@ -129,6 +129,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return if (minOf(b,d) - maxOf(a,c) >= 0) minOf(b,d) - maxOf(a,c)
+    return if (minOf(b,d) - maxOf(a,c) >= 0)  minOf(b,d) - maxOf(a,c)
     else -1
 }
