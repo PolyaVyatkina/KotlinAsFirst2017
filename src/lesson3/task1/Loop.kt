@@ -1,6 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import lesson1.task1.sqr
+import java.lang.Math.*
+
 /**
  * Пример
  *
@@ -62,7 +65,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var k = 0
-    var num = n
+    var num = abs(n)
     while (num > 0) {
         k++
         num /= 10
@@ -190,7 +193,19 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var sum = 0
+    var i = 1
+    var del = 1
+
+    while (sum < n) {
+        sum += digitNumber(i*i)
+        i++
+    }
+    i--
+    for (k in 1..abs(n - sum)) del *= 10
+    return (i * i / del) % 10
+}
 
 /**
  * Сложная
