@@ -76,9 +76,14 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int = TODO()
-
-
+                       rookX2: Int, rookY2: Int): Int {
+    return when {
+        ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
+        (kingX == rookX2) || (kingY == rookY2) -> 2
+        (kingX == rookX1) || (kingY == rookY1) -> 1
+        else -> 0
+    }
+}
 
 /**
  * Простая
@@ -92,7 +97,14 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int = TODO()
+                          bishopX: Int, bishopY: Int): Int {
+    var rook = 0
+    var bishop = 0
+    if (kingX == rookX || kingY == rookY) rook++
+    if (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)) bishop += 2
+    return rook + bishop
+
+}
 
 /**
  * Простая
