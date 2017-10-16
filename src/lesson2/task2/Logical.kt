@@ -30,7 +30,7 @@ fun isNumberHappy(number: Int): Boolean =
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-        (x1 == x2)  ||  (y1 == y2)  ||  (x1 + y1 == x2 + y2) || (abs(x1 - x2) == abs(y1 - y2))
+        (x1 == x2) || (y1 == y2) || (x1 + y1 == x2 + y2) || (abs(x1 - x2) == abs(y1 - y2))
 
 /**
  * Средняя
@@ -53,9 +53,9 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
-            ((a <= r)  &&  (b <= s))
-        ||  ((a <= r)  &&  (c <= s))
-        ||  ((b <= r)  &&  (c <= s))
-        ||  ((a <= s)  &&  (b <= r))
-        ||  ((a <= s)  &&  (c <= r))
-        ||  ((b <= s)  &&  (c <= r))
+           ((a <= r)  &&  (b <= s))
+        || ((a <= r)  &&  (c <= s))
+        || ((b <= r)  &&  (c <= s))
+        || ((a <= s)  &&  (b <= r))
+        || ((a <= s)  &&  (c <= r))
+        || ((b <= s)  &&  (c <= r))

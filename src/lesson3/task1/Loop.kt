@@ -81,9 +81,9 @@ fun digitNumber(n: Int): Int {
  */
 fun fib(n: Int): Int =
     when {
-        n == 1  ->  1
-        n == 2  ->  1
-        else  ->  fib(n-1) + fib(n-2)
+        n == 1 -> 1
+        n == 2 -> 1
+        else -> fib(n-1) + fib(n-2)
     }
 
 /**
@@ -107,14 +107,30 @@ fun lcm(m: Int, n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var res = 0
+    for (i in 2..n)
+        if (n % i == 0) {
+            res = i
+            break
+        }
+    return res
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var res = 0
+    for (i in n-1 downTo 1)
+        if (n % i == 0) {
+            res = i
+            break
+        }
+    return res
+}
 
 /**
  * Простая
@@ -123,7 +139,11 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for (i in 2..minOf(m,n))
+        if (m % i == 0 && n % i == 0) return false
+    return true
+}
 
 /**
  * Простая
@@ -176,7 +196,7 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean =
-        (revert(n) == n)
+        revert(n) == n
 
 /**
  * Средняя
@@ -196,15 +216,16 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
 fun squareSequenceDigit(n: Int): Int {
     var sum = 0
     var i = 1
-    var del = 1
+    val del: Double
 
     while (sum < n) {
         sum += digitNumber(i*i)
         i++
     }
     i--
-    for (k in 1..abs(n - sum)) del *= 10
-    return (i * i / del) % 10
+    del = pow(10.0,abs(n - sum).toDouble())
+    //for (k in 1..abs(n - sum)) del *= 10
+    return (i * i / del.toInt()) % 10
 }
 
 /**

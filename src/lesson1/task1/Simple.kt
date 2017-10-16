@@ -60,7 +60,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 3600 + minute
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = 4.445 * (sagenes * 48 + arshins*16 + vershoks) / 100
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = 4.445 * (sagenes * 48 + arshins * 16 + vershoks) / 100
 
 /**
  * Тривиальная
@@ -111,4 +111,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = initial * pow(1 + 
  * Пользователь задает целое трехзначное число (например, 478).
  *Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = (number % 10) * 100 + (number / 100) + (((number / 10) % 10) * 10)
+fun numberRevert(number: Int): Int = number % 10 * 100 + number / 100 + number / 10 % 10 * 10

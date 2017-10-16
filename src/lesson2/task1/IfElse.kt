@@ -35,10 +35,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if ((age % 100 > 10) && (age % 100 < 20)) return "$age лет"
-    else return when {
+    return when {
+        (age % 100 > 10) && (age % 100 < 20)  ->  "$age лет"
         age % 10 == 1  ->  "$age год"
-        (age % 10 > 1) && (age % 10 < 5)   ->  "$age года"
+        (age % 10 > 1) && (age % 10 < 5)  ->  "$age года"
         else  ->  "$age лет"
     }
 }
@@ -59,9 +59,9 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s = (s1 + s2 + s3) / 2
 
     return when {
-        s <= s1  ->  s / v1
-        s <= (s1 + s2)  ->  t1 + (s - s1) / v2
-        else  ->  t1 + t2 + (s - s1 - s2) / v3
+        s <= s1 -> s / v1
+        s <= (s1 + s2) -> t1 + (s - s1) / v2
+        else -> t1 + t2 + (s - s1 - s2) / v3
     }
 }
 
@@ -115,17 +115,15 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val maxR: Double
+    val maxR: Double = maxOf(a, b, c)
+    val R2: Double = minOf(a, b, c)
     val R1: Double
-    val R2: Double
 
-    maxR = maxOf(a, b, c)
-    R2 = minOf(a, b, c)
     R1 = a + b + c - maxR - R2
 
-    if (R1 + R2 < maxR) return -1
-    else return when {
-        sqr(R1) + sqr(R2) > sqr(maxR)  ->  0
+    return when {
+        R1 + R2 < maxR -> -1
+        sqr(R1) + sqr(R2) > sqr(maxR) -> 0
         sqr(R1) + sqr(R2) == sqr(maxR) -> 1
         sqr(R1) + sqr(R2) < sqr(maxR) -> 2
         else -> -1
