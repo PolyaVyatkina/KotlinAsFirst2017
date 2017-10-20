@@ -79,13 +79,18 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int =
-    when {
-        n == 1 -> 1
-        n == 2 -> 1
-        else -> fib(n-1) + fib(n-2)
+fun fib(n: Int): Int {
+    var res = 1
+    var num1 = 0
+    var num2 = 1
+    for (i in 2..n) {
+        res = num1 + num2
+        val num3 = num1
+        num1 = num2
+        num2 = num3 + num1
     }
-
+    return res
+}
 /**
  * Простая
  *
@@ -216,16 +221,14 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
 fun squareSequenceDigit(n: Int): Int {
     var sum = 0
     var i = 1
-    val del: Double
 
     while (sum < n) {
         sum += digitNumber(i*i)
         i++
     }
     i--
-    del = pow(10.0,abs(n - sum).toDouble())
-    //for (k in 1..abs(n - sum)) del *= 10
-    return (i * i / del.toInt()) % 10
+    val del = pow(10.0,abs(n - sum).toDouble()).toInt()
+    return (i * i / del) % 10
 }
 
 /**
@@ -235,4 +238,15 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var sum = 0
+    var i = 1
+
+    while (sum < n) {
+        sum += digitNumber(fib(i))
+        i++
+    }
+    i--
+    val del = pow(10.0,abs(n - sum).toDouble()).toInt()
+    return (fib(i) / del) % 10
+}
