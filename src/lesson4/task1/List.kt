@@ -121,8 +121,8 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    if (list.isEmpty()) return 0.0
-    else return list.sum() / list.size
+    return if (list.isEmpty()) 0.0
+    else list.sum() / list.size
 }
 
 /**
@@ -217,7 +217,7 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-//fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
+fun factorizeToString(n: Int): String = TODO()
 
 /**
  * Средняя
@@ -226,7 +226,15 @@ fun factorize(n: Int): List<Int> {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val res = mutableListOf<Int>()
+    var num = n
+    while (num > 0) {
+        res.add(0,num % base)
+        num /= base
+    }
+    return res
+}
 
 /**
  * Сложная
@@ -236,7 +244,18 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val letters = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+    val res = mutableListOf<String>()
+    var num = n
+    while (num > 0) {
+        if (num % base > 9) res.add(0,letters[(num % base) - 10])
+        else res.add(0,(num % base).toString())
+        num /= base
+    }
+    return res.joinToString(separator = "")
+}
 
 /**
  * Средняя
@@ -245,7 +264,15 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var degree: Int
+    var num = 0
+    for (i in 0 until digits.size) {
+        degree = digits.size -1 - i
+        num += digits[i] * pow(base.toDouble(),degree.toDouble()).toInt()
+    }
+    return num
+}
 
 /**
  * Сложная
