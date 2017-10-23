@@ -233,6 +233,7 @@ fun convert(n: Int, base: Int): List<Int> {
         res.add(0,num % base)
         num /= base
     }
+    if (res.isEmpty()) res.add(0)
     return res
 }
 
@@ -245,16 +246,19 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    val letters = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-                                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-    val res = mutableListOf<String>()
-    var num = n
-    while (num > 0) {
-        if (num % base > 9) res.add(0,letters[(num % base) - 10])
-        else res.add(0,(num % base).toString())
-        num /= base
+    return if (n == 0) "0"
+    else {
+        val letters = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+        val res = mutableListOf<String>()
+        var num = n
+        while (num > 0) {
+            if (num % base > 9) res.add(0, letters[(num % base) - 10])
+            else res.add(0, (num % base).toString())
+            num /= base
+        }
+        res.joinToString(separator = "")
     }
-    return res.joinToString(separator = "")
 }
 
 /**
@@ -346,6 +350,7 @@ fun russian(n: Int): String {
     if (res.isNotEmpty()) res += when (c) {
         1 -> "тысяча "
         2 -> "тысячи "
+        4 -> "тысячи "
         else -> "тысяч "
     }
     res += hundreds[d]
