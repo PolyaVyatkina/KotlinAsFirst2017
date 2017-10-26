@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson4.task1
 
 import lesson1.task1.discriminant
@@ -164,7 +165,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
 fun polynom(p: List<Double>, x: Double): Double {
     var res = 0.0
     for (i in 0 until p.size) {
-        res += p[i] * pow(x,i.toDouble())
+        res += p[i] * pow(x, i.toDouble())
     }
     return res
 }
@@ -201,12 +202,11 @@ fun factorize(n: Int): List<Int> {
     val res = mutableListOf<Int>()
     var i = 2
     var num = n
-    while (num > 0 && i <= num) {
-        while (num % i == 0) {
+    while (i <= num) {
+        if (num % i == 0) {
             num /= i
             res.add(i)
-        }
-        i++
+        } else i++
     }
     return res
 }
@@ -217,7 +217,7 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString("*")
 
 /**
  * Средняя
@@ -230,7 +230,7 @@ fun convert(n: Int, base: Int): List<Int> {
     val res = mutableListOf<Int>()
     var num = n
     while (num > 0) {
-        res.add(0,num % base)
+        res.add(0, num % base)
         num /= base
     }
     if (res.isEmpty()) res.add(0)
@@ -248,16 +248,15 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     return if (n == 0) "0"
     else {
-        val letters = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+        val letters = ('a'..'z').toList()
         val res = mutableListOf<String>()
         var num = n
         while (num > 0) {
-            if (num % base > 9) res.add(0, letters[(num % base) - 10])
-            else res.add(0, (num % base).toString())
+            if (num % base > 9) res.add(letters[(num % base) - 10].toString())
+            else res.add((num % base).toString()).toString()
             num /= base
         }
-        res.joinToString(separator = "")
+        res.reversed().joinToString("")
     }
 }
 
@@ -269,11 +268,10 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var degree: Int
     var num = 0
     for (i in 0 until digits.size) {
-        degree = digits.size -1 - i
-        num += digits[i] * pow(base.toDouble(),degree.toDouble()).toInt()
+        val degree = digits.size - 1 - i
+        num += digits[i] * pow(base.toDouble(), degree.toDouble()).toInt()
     }
     return num
 }
@@ -350,6 +348,7 @@ fun russian(n: Int): String {
     if (res.isNotEmpty()) res += when (c) {
         1 -> "тысяча "
         2 -> "тысячи "
+        3 -> "тысячи "
         4 -> "тысячи "
         else -> "тысяч "
     }
