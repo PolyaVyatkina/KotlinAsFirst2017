@@ -68,15 +68,23 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
-    val months = listOf<String>("января", "февраля", "марта", "апреля", "мая", "июня",
-            "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    var i = 0
-    while (i < months.size) {
-        if (months[i] == parts[1]) break
-        i++
+    val month: String
+    month = when (parts[1]) {
+        "января" -> "01"
+        "февраля" -> "02"
+        "марта" -> "03"
+        "апреля" -> "04"
+        "мая" -> "05"
+        "июня" -> "06"
+        "июля" -> "07"
+        "августа" -> "08"
+        "сентября" -> "09"
+        "октября" -> "10"
+        "ноября" -> "11"
+        "декабря" -> "12"
+        else -> return ""
     }
-    return if (i == 12) ""
-    else String.format("%02d.%02d.%02d", parts[0].toInt(), i + 1, parts[2].toInt())
+    return String.format("%02d.%s.%s", parts[0].toInt(), month, parts[2])
 }
 
 /**
@@ -86,7 +94,27 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    val month: String
+    month = when (parts[1]) {
+        "01" -> "января"
+        "02" -> "февраля"
+        "03" -> "марта"
+        "04" -> "апреля"
+        "05" -> "мая"
+        "06" -> "июня"
+        "07" -> "июля"
+        "08" -> "августа"
+        "09" -> "сентября"
+        "10" -> "октября"
+        "11" -> "ноября"
+        "12" -> "декабря"
+        else -> return ""
+    }
+    return String.format("%d %s %s", parts[0].toInt(), month, parts[2])
+}
 
 /**
  * Средняя
@@ -100,7 +128,16 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var res = ""
+    val symb = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '(', ')', ' ')
+    if (phone[0] == '+') res += "+"
+    for (i in 0 until phone.length) {
+        if (phone[i] !in symb) return ""
+        else if (phone[i] in '0'..'9') res += phone[i]
+    }
+    return res
+}
 
 /**
  * Средняя
@@ -112,7 +149,17 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val symb = listOf('-', '%', ' ')
+    val num = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
+    val parts = jumps.split(" ")
+    var maxJump = -1
+    for (i in 0 until parts.size) {
+        if (parts[i].first() in num && parts[i].toInt() > maxJump) maxJump = parts[i].toInt()
+        else if (parts[i].first() !in symb && parts[i].first() !in num) return -1
+    }
+    return maxJump
+}
 
 /**
  * Сложная

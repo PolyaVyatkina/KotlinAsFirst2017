@@ -345,13 +345,14 @@ fun russian(n: Int): String {
             else -> ones[c]
         }
     }
-    if (res.isNotEmpty()) res += when (c) {
+    if (res.isNotEmpty() && b != 1) res += when (c) {
         1 -> "тысяча "
         2 -> "тысячи "
         3 -> "тысячи "
         4 -> "тысячи "
         else -> "тысяч "
     }
+    if (b == 1) res += "тысяч "
     res += hundreds[d]
     if (e == 1) res += elevens[f]
     else {
