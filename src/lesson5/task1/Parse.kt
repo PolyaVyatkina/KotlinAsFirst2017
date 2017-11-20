@@ -154,11 +154,17 @@ fun bestLongJump(jumps: String): Int {
     if (jumps == "") return -1
     val symb = listOf('-', '%', ' ')
     val num = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
-    val parts = jumps.split(" ")
+    var i = 0
+    var c = ""
     var maxJump = -1
-    for (i in 0 until parts.size) {
-        if (parts[i].first() in num && parts[i].toInt() > maxJump) maxJump = parts[i].toInt()
-        else if (parts[i].first() !in symb && parts[i].first() !in num) return -1
+    while (i < jumps.length) {
+        if (jumps[i] !in symb && jumps[i] !in num) return -1
+        if (jumps[i] in num) c += jumps[i]
+        if (jumps[i] in symb || i == jumps.length - 1) {
+            if (c != "" && c.toInt() > maxJump) maxJump = c.toInt()
+            c = ""
+        }
+        i++
     }
     return maxJump
 }
@@ -185,6 +191,12 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int = TODO()
+/*{
+    val parts = expression.split(" ")
+    val num = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+    var sum = 0
+    if (parts[0].first() !in num ) throw IllegalArgumentException
+}*/
 
 /**
  * Сложная
