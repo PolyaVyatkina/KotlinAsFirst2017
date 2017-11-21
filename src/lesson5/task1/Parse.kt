@@ -68,23 +68,11 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
-    val month: String
-    month = when (parts[1]) {
-        "января" -> "01"
-        "февраля" -> "02"
-        "марта" -> "03"
-        "апреля" -> "04"
-        "мая" -> "05"
-        "июня" -> "06"
-        "июля" -> "07"
-        "августа" -> "08"
-        "сентября" -> "09"
-        "октября" -> "10"
-        "ноября" -> "11"
-        "декабря" -> "12"
-        else -> return ""
-    }
-    return String.format("%02d.%s.%s", parts[0].toInt(), month, parts[2])
+    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val i = months.indexOf(parts[1])
+    return if (i == -1) ""
+    else String.format("%02d.%02d.%d", parts[0].toInt(), i + 1, parts[2].toInt())
 }
 
 /**
@@ -97,8 +85,7 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3) return ""
-    val month: String
-    month = when (parts[1]) {
+    val month = when (parts[1]) {
         "01" -> "января"
         "02" -> "февраля"
         "03" -> "марта"
@@ -191,12 +178,6 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int = TODO()
-/*{
-    val parts = expression.split(" ")
-    val num = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-    var sum = 0
-    if (parts[0].first() !in num ) throw IllegalArgumentException
-}*/
 
 /**
  * Сложная
@@ -220,7 +201,26 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    try {
+        val parts = description.split("; ")
+        val product = mutableListOf<String>()
+        val price = mutableListOf<Double>()
+        for (i in 0 until parts.size) {
+            val midProduct = parts[i].substring(0, parts[i].indexOf(' ', 0))
+            product += midProduct
+            val midPrice = parts[i].substring(parts[i].indexOf(' ', 0) + 1, parts[i].length)
+            price += midPrice.toDouble()
+        }
+        return if (price.min()!! < 0.0) ""
+        else return product[price.indexOf(price.max()!!)]
+    } catch (e: StringIndexOutOfBoundsException) {
+        return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
+
 
 /**
  * Сложная

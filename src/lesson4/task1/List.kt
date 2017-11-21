@@ -327,13 +327,18 @@ fun russian(n: Int): String {
     val hundreds =
             listOf("", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ", "семьсот ", "восемьсот ", "девятьсот ")
 
-    val a = n / 100000
-    val b = n / 10000 % 10
-    val c = n / 1000 % 10
-    val d = n / 100 % 10
-    val e = n / 10 % 10
-    val f = n % 10
     var res = ""
+    val con = convert(n, 10)
+    val num = mutableListOf<Int>()
+    for (i in 1..6 - con.size) num.add(0)
+    num += con
+    val a = num[0]
+    val b = num[1]
+    val c = num[2]
+    val d = num[3]
+    val e = num[4]
+    val f = num[5]
+
 
     res += hundreds[a]
     if (b == 1) res += elevens[c]
