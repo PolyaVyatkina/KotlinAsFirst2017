@@ -180,18 +180,21 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
-/*{
+fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
-    for (element in parts) if (!element.matches(Regex("""(\d+ [%+-]*)"""))) return -1
-    for (element in parts) element.filter { it != '%' }
+    if (parts.size <= 1) return -1
     var res = -1
-    for (i in 0 until parts.size - 1) {
-        if (parts[i + 1] == "+" && parts[i].toInt() > res) res = parts[i].toInt()
+    try {
+        for (i in 0 until parts.size step 2) {
+            if ("+" in parts[i + 1]) {
+                if (parts[i].toInt() >= res) res = parts[i].toInt()
+            }
+        }
+    } catch (e: NumberFormatException) {
+        return -1
     }
     return res
 }
-*/
 /**
  * Сложная
  *
@@ -231,8 +234,7 @@ fun plusMinus(expression: String): Int {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    str.toLowerCase()
-    val words = str.split(" ")
+    val words = str.split(" ").map { it.toLowerCase() }
     var letters = 0
     for (i in 0 until words.size - 1) {
         if (words[i] != words[i + 1]) letters += words[i].length

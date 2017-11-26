@@ -92,10 +92,11 @@ class Tests {
     @Test
     @Tag("Hard")
     fun firstDuplicateIndex() {
-        //assertEquals(-1, firstDuplicateIndex("Привет"))
+        assertEquals(-1, firstDuplicateIndex("Привет"))
         assertEquals(9, firstDuplicateIndex("Он пошёл в в школу"))
         assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(9, firstDuplicateIndex("Мы пошли прямо Прямо располагался магазин"))
+        assertEquals(30, firstDuplicateIndex(", 3 , B u V { B F i D & y h \\ j J k _ ! l l a 3 M O y m ~ Y q U X H + { 3 8 : E 5 O ` m F & D 2 L H ^ 2 _ K T ! H 1 L J | O # * ! G O K e y A N U ( P m 2 d q X 5 i 5 ' [ ' f 5"))
     }
 
     @Test
