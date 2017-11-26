@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson2.task2.brickPasses
+
 /**
  * Пример
  *
@@ -68,11 +70,23 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
-    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
-            "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val i = months.indexOf(parts[1])
-    return if (i == -1) ""
-    else String.format("%02d.%02d.%d", parts[0].toInt(), i + 1, parts[2].toInt())
+    val month: String
+    month = when (parts[1]) {
+        "января" -> "01"
+        "февраля" -> "02"
+        "марта" -> "03"
+        "апреля" -> "04"
+        "мая" -> "05"
+        "июня" -> "06"
+        "июля" -> "07"
+        "августа" -> "08"
+        "сентября" -> "09"
+        "октября" -> "10"
+        "ноября" -> "11"
+        "декабря" -> "12"
+        else -> return ""
+    }
+    return String.format("%02d.%s.%s", parts[0].toInt(), month, parts[2])
 }
 
 /**
@@ -85,7 +99,8 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3) return ""
-    val month = when (parts[1]) {
+    val month: String
+    month = when (parts[1]) {
         "01" -> "января"
         "02" -> "февраля"
         "03" -> "марта"
@@ -141,17 +156,16 @@ fun bestLongJump(jumps: String): Int {
     if (jumps == "") return -1
     val symb = listOf('-', '%', ' ')
     val num = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
-    var i = 0
     var c = ""
     var maxJump = -1
-    while (i < jumps.length) {
-        if (jumps[i] !in symb && jumps[i] !in num) return -1
-        if (jumps[i] in num) c += jumps[i]
-        if (jumps[i] in symb || i == jumps.length - 1) {
-            if (c != "" && c.toInt() > maxJump) maxJump = c.toInt()
-            c = ""
+    for (it in jumps) {
+        if (it !in symb && it !in num) return -1
+        if (it in num) c += it
+        else c = ""
+        if (c != "" && c.toInt() > maxJump) {
+            maxJump = c.toInt()
         }
-        i++
+
     }
     return maxJump
 }
@@ -167,7 +181,17 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = TODO()
-
+/*{
+    val parts = jumps.split(" ")
+    for (element in parts) if (!element.matches(Regex("""(\d+ [%+-]*)"""))) return -1
+    for (element in parts) element.filter { it != '%' }
+    var res = -1
+    for (i in 0 until parts.size - 1) {
+        if (parts[i + 1] == "+" && parts[i].toInt() > res) res = parts[i].toInt()
+    }
+    return res
+}
+*/
 /**
  * Сложная
  *
@@ -177,7 +201,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val parts = expression.split(" ")
+    if (!parts[0].matches(Regex("""\d+"""))) throw IllegalArgumentException()
+    var sign = 1
+    var res = parts[0].toInt()
+    for (i in 1 until parts.size) {
+        if (i % 2 == 1) {
+            sign = when (parts[i]) {
+                "+" -> 1
+                "-" -> -1
+                else -> throw IllegalArgumentException()
+            }
+        } else {
+            if (!parts[i].matches(Regex("""\d+"""))) throw IllegalArgumentException()
+            res += sign * parts[i].toInt()
+        }
+    }
+    return res
+}
 
 /**
  * Сложная
@@ -188,7 +230,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    str.toLowerCase()
+    val words = str.split(" ")
+    var letters = 0
+    for (i in 0 until words.size - 1) {
+        if (words[i] != words[i + 1]) letters += words[i].length
+        else return i + letters
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -207,10 +258,9 @@ fun mostExpensive(description: String): String {
         val product = mutableListOf<String>()
         val price = mutableListOf<Double>()
         for (i in 0 until parts.size) {
-            val midProduct = parts[i].substring(0, parts[i].indexOf(' ', 0))
-            product += midProduct
-            val midPrice = parts[i].substring(parts[i].indexOf(' ', 0) + 1, parts[i].length)
-            price += midPrice.toDouble()
+            val parts2 = parts[i].split(" ")
+            product += parts2[0]
+            price += parts2[1].toDouble()
         }
         return if (price.min()!! < 0.0) ""
         else return product[price.indexOf(price.max()!!)]
@@ -218,9 +268,10 @@ fun mostExpensive(description: String): String {
         return ""
     } catch (e: NumberFormatException) {
         return ""
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
     }
 }
-
 
 /**
  * Сложная

@@ -328,16 +328,13 @@ fun russian(n: Int): String {
             listOf("", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ", "семьсот ", "восемьсот ", "девятьсот ")
 
     var res = ""
-    val con = convert(n, 10)
-    val num = mutableListOf<Int>()
-    for (i in 1..6 - con.size) num.add(0)
-    num += con
-    val a = num[0]
-    val b = num[1]
-    val c = num[2]
-    val d = num[3]
-    val e = num[4]
-    val f = num[5]
+    val num = convert(n, 10).reversed()
+    val a = num.getOrElse(5, { 0 })
+    val b = num.getOrElse(4, { 0 })
+    val c = num.getOrElse(3, { 0 })
+    val d = num.getOrElse(2, { 0 })
+    val e = num.getOrElse(1, { 0 })
+    val f = num.getOrElse(0, { 0 })
 
 
     res += hundreds[a]
