@@ -158,15 +158,15 @@ fun bestLongJump(jumps: String): Int {
     val num = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
     var c = ""
     var maxJump = -1
-    for (it in jumps) {
-        if (it !in symb && it !in num) return -1
-        if (it in num) c += it
-        else c = ""
-        if (c != "" && c.toInt() > maxJump) {
-            maxJump = c.toInt()
+    for (it in jumps)
+        when (it) {
+            in num -> {
+                c += it
+                if (c.toInt() > maxJump) maxJump = c.toInt()
+            }
+            in symb -> c = ""
+            else -> return -1
         }
-
-    }
     return maxJump
 }
 
@@ -187,7 +187,8 @@ fun bestHighJump(jumps: String): Int {
     try {
         for (i in 0 until parts.size step 2) {
             if ("+" in parts[i + 1]) {
-                if (parts[i].toInt() >= res) res = parts[i].toInt()
+                val jump = parts[i].toInt()
+                if (jump >= res) res = jump
             }
         }
     } catch (e: NumberFormatException) {
@@ -195,6 +196,7 @@ fun bestHighJump(jumps: String): Int {
     }
     return res
 }
+
 /**
  * Сложная
  *
@@ -207,19 +209,15 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     if (!parts[0].matches(Regex("""\d+"""))) throw IllegalArgumentException()
-    var sign = 1
     var res = parts[0].toInt()
-    for (i in 1 until parts.size) {
-        if (i % 2 == 1) {
-            sign = when (parts[i]) {
-                "+" -> 1
-                "-" -> -1
-                else -> throw IllegalArgumentException()
-            }
-        } else {
-            if (!parts[i].matches(Regex("""\d+"""))) throw IllegalArgumentException()
-            res += sign * parts[i].toInt()
+    for (i in 1 until parts.size step 2) {
+        val sign = when (parts[i]) {
+            "+" -> 1
+            "-" -> -1
+            else -> throw IllegalArgumentException()
         }
+        if (!parts[i + 1].matches(Regex("""\d+"""))) throw IllegalArgumentException()
+        res += sign * parts[i + 1].toInt()
     }
     return res
 }
