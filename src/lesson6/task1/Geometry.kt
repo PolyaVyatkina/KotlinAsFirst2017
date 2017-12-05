@@ -153,7 +153,13 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+    fun crossPoint(other: Line): Point {
+        val x: Double = (b * cos(other.angle) - other.b * cos(angle)) / sin(other.angle - angle)
+        val y = if (abs(PI / 2 - angle) > abs(PI / 2 - other.angle))
+            (x * sin(this.angle) + this.b) / cos(this.angle)
+        else (x * sin(other.angle) + other.b) / cos(other.angle)
+        return Point(x, y)
+    }
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
@@ -190,7 +196,13 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line {
+    val firstLine = lineByPoints(a, b)
+    var ang = firstLine.angle
+    if (firstLine.angle >= PI / 2) ang -= PI / 2
+    else ang += PI / 2
+    return Line(Point((a.x + b.x) / 2.0, (a.y + b.y) / 2.0), ang)
+}
 
 /**
  * Средняя
@@ -224,7 +236,14 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
+    val abc = Triangle(a, b, c)
+    val s = abc.area()
+    val bisector1 = bisectorByPoints(a, b)
+    val bisector2 = bisectorByPoints(b, c)
+    return Circle(bisector1.crossPoint(bisector2), (a.distance(b) * b.distance(c) * c.distance(a)) / (4 * s))
+
+}
 
 /**
  * Очень сложная
