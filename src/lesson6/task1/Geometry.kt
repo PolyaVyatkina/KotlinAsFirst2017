@@ -154,7 +154,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
     fun crossPoint(other: Line): Point {
-        val x: Double = (b * cos(other.angle) - other.b * cos(angle)) / sin(other.angle - angle)
+        val x = (b * cos(other.angle) - other.b * cos(angle)) / sin(other.angle - angle)
         val y = if (abs(PI / 2 - angle) > abs(PI / 2 - other.angle))
             (x * sin(this.angle) + this.b) / cos(this.angle)
         else (x * sin(other.angle) + other.b) / cos(other.angle)
@@ -212,7 +212,7 @@ fun bisectorByPoints(a: Point, b: Point): Line {
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     if (circles.size < 2) throw IllegalArgumentException()
-    var minD = 1000000000000.0
+    var minD = Double.MAX_VALUE
     var res1 = Circle(Point(0.0, 0.0), 0.0)
     var res2 = Circle(Point(0.0, 0.0), 0.0)
     for (i in 0 until circles.size - 1)
