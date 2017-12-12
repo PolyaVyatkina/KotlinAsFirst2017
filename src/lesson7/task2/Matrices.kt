@@ -78,43 +78,6 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  1  1  1  1  1
  */
 fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
-/*{
-    val res = createMatrix(height, width, 0)
-    var n = 0
-    var k = 0
-    while (n < height * width) {
-        var i = k
-        var j = k
-        k++
-        while (res[i, j] == 0 && j < width) {
-            res[i, j] = k
-            n++
-            j++
-        }
-        j--
-        i++
-        while (res[i, j] == 0 && i < height) {
-            res[i, j] = k
-            n++
-            i++
-        }
-        i--
-        j--
-        while (res[i, j] == 0 && j >= 0) {
-            res[i, j] = k
-            n++
-            j--
-        }
-        i--
-        j++
-        while (res[i, j] == 0 && i >= 0) {
-            res[i, j] = k
-            n++
-            i--
-        }
-    }
-    return res
-}*/
 
 /**
  * Сложная
