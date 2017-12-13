@@ -64,25 +64,29 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val res = createMatrix(height, width, 0)
     var k = 1
-    for (i in 1..height / 2) {
-        for (j in i - 1 until height - i + 1) {
+    var i = 1
+    while (k <= height * width) {
+        for (j in i - 1 until width - i + 1) {
             res[i - 1, j] = k
             k++
         }
-        for (j in i downTo height - i) {
-            res[j, height - i] = k
+        if (k >= height * width) return res
+        for (j in i until height - i + 1) {
+            res[j, width - i] = k
             k++
         }
-        for (j in height - i - 1 downTo i - 1) {
+        if (k >= height * width) return res
+        for (j in width - i - 1 downTo i - 1) {
             res[height - i, j] = k
             k++
         }
+        if (k >= height * width) return res
         for (j in height - i - 1 downTo i) {
             res[j, i - 1] = k
             k++
         }
+        i++
     }
-    if (height % 2 == 1) res[height / 2, height / 2] = height * height
     return res
 }
 
@@ -100,27 +104,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> {
-    val res = createMatrix(height, width, 0)
-    var k = 1
-    for (i in 1..height / 2) {
-        for (j in i - 1 until height - i + 1) {
-            res[i - 1, j] = k
-        }
-        for (j in i downTo height - i) {
-            res[j, height - i] = k
-        }
-        for (j in height - i - 1 downTo i - 1) {
-            res[height - i, j] = k
-        }
-        for (j in height - i - 1 downTo i) {
-            res[j, i - 1] = k
-        }
-        k++
-    }
-    if (height % 2 == 1) res[height / 2, height / 2] = height * height
-    return res
-}
+fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
 
 /**
  * Сложная
