@@ -61,34 +61,7 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> {
-    val res = createMatrix(height, width, 0)
-    var k = 1
-    var i = 1
-    while (k <= height * width) {
-        for (j in i - 1 until width - i + 1) {
-            res[i - 1, j] = k
-            k++
-        }
-        if (k >= height * width) return res
-        for (j in i until height - i + 1) {
-            res[j, width - i] = k
-            k++
-        }
-        if (k >= height * width) return res
-        for (j in width - i - 1 downTo i - 1) {
-            res[height - i, j] = k
-            k++
-        }
-        if (k >= height * width) return res
-        for (j in height - i - 1 downTo i) {
-            res[j, i - 1] = k
-            k++
-        }
-        i++
-    }
-    return res
-}
+fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
 
 /**
  * Сложная
@@ -104,7 +77,14 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val res = createMatrix(height, width, 0)
+    for (i in 0 until height)
+        for (j in 0 until width) {
+            res[i, j] = minOf(minOf(i + 1, j + 1, height - i), width - j)
+        }
+    return res
+}
 
 /**
  * Сложная
@@ -137,8 +117,8 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
     val res = createMatrix(matrix.height, matrix.width, matrix[0, 0])
     val size = matrix.height
     for (i in 0 until size)
-        for (j in 0 until size - i) {
-            res[i, j] = matrix[size - j - 1, i]
+        for (j in 0 until size) {
+            res[i, size - j - 1] = matrix[j, i]
         }
     return res
 }
