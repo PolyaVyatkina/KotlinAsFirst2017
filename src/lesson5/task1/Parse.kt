@@ -131,7 +131,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    if (phone == "") return ""
+    if (phone == "" || phone == "+") return ""
     var res = ""
     val symb = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '(', ')', ' ')
     if (phone[0] == '+') res += "+"
