@@ -71,11 +71,16 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
     override fun set(cell: Cell, value: E) = set(cell.row, cell.column, value)
 
     override fun equals(other: Any?): Boolean {
-        if (other is MatrixImpl<*> && other.height == height && other.width == width) {
-            for (i in 0 until height)
-                if (matrix[i] != other.matrix[i]) return false
-            return true
-        } else return false
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MatrixImpl<*>
+
+        if (height != other.height) return false
+        if (width != other.width) return false
+        if (matrix != other.matrix) return false
+
+        return true
     }
 
     override fun toString(): String {

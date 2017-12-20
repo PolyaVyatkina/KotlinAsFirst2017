@@ -210,14 +210,14 @@ data class Holes(val rows: List<Int>, val columns: List<Int>)
  */
 fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> {
     val res = createMatrix(matrix.height, matrix.width, 0)
-    for (i in 0 until matrix.height)
+    for (i in 0 until matrix.height) {
+        var sum = 0
         for (j in 0 until matrix.width) {
-            var sum = 0
-            for (u in 0..i)
-                for (v in 0..j)
-                    sum += matrix[u, v]
-            res[i, j] = sum
+            sum += matrix[i, j]
+            if (i == 0) res[i, j] += sum
+            else res[i, j] = res[i - 1, j] + sum
         }
+    }
     return res
 }
 
@@ -252,7 +252,7 @@ fun canOpenLock(key: Matrix<Int>, lock: Matrix<Int>): Triple<Boolean, Int, Int> 
 operator fun Matrix<Int>.unaryMinus(): Matrix<Int> {
     for (i in 0 until this.height)
         for (j in 0 until this.width)
-            this[i, j] *= -1
+            this[i, j] = -this[i, j]
     return this
 }
 

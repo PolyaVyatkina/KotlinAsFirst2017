@@ -57,8 +57,9 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     val res = mutableMapOf<String, Int>()
     for (str in substrings) {
         var k = 0
+        val strToRegex = str.toLowerCase().toRegex()
         for (line in File(inputName).readLines()) {
-            k += str.toLowerCase().toRegex().findAll(line.toLowerCase()).count()
+            k += strToRegex.findAll(line.toLowerCase()).count()
         }
         res[str] = k
     }
@@ -141,17 +142,17 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         val words = line.split(" ").filter { it.isNotEmpty() }.toMutableList()
         var wordsLength = 0
         for (word in words) wordsLength += word.length
-        var resultLine: String
-        if (words.size < 2) resultLine = line.trim()
-        else {
-            while (maxLength > wordsLength)
-                for (i in 0 until words.size - 1)
-                    if (maxLength > wordsLength) {
-                        words[i] += " "
-                        wordsLength++
-                    }
-            resultLine = words.joinToString("")
-        }
+        val resultLine =
+                if (words.size < 2) line.trim()
+                else {
+                    while (maxLength > wordsLength)
+                        for (i in 0 until words.size - 1)
+                            if (maxLength > wordsLength) {
+                                words[i] += " "
+                                wordsLength++
+                            }
+                    words.joinToString("")
+                }
         result.write(resultLine)
         result.newLine()
     }

@@ -153,21 +153,14 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    if (jumps == "") return -1
-    val symb = listOf('-', '%', ' ')
-    val num = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
-    var c = ""
-    var maxJump = -1
-    for (it in jumps)
-        when (it) {
-            in num -> {
-                c += it
-                if (c.toInt() > maxJump) maxJump = c.toInt()
-            }
-            in symb -> c = ""
-            else -> return -1
-        }
-    return maxJump
+    val parts = jumps.split(" ").filter { it.isNotEmpty() }
+    var result = -1
+    for (part in parts) {
+        if (!(part matches Regex("[-%]|\\d+"))) return -1
+        else if (part matches Regex("\\d+") && part.toInt() > result)
+            result = part.toInt()
+    }
+    return result
 }
 
 /**
